@@ -1,0 +1,152 @@
+<div class="film-list-container">
+  <h2>Programmazioni</h2>
+  <div class="date-picker">
+    <label for="startDate">Data Inizio:</label>
+    <input
+      type="date"
+      id="startDate"
+      class="form-control"
+      [(ngModel)]="selectedStartDate"
+      (change)="onDateChange()"
+    />
+    <label for="endDate">Data Fine:</label>
+    <input
+      type="date"
+      id="endDate"
+      class="form-control"
+      [(ngModel)]="selectedEndDate"
+      (change)="onDateChange()"
+    />
+  </div>
+
+  <div *ngIf="liveProgrammazioni.length > 0">
+    <h3>Film in Programmazione</h3>
+    <div
+      *ngFor="let programmazione of liveProgrammazioni"
+      class="film-container"
+    >
+      <div class="film-cover">
+        <img
+          *ngIf="programmazione.filmDetails?.coverUrl"
+          [src]="programmazione.filmDetails?.coverUrl"
+          alt="{{ programmazione.filmDetails?.nome }} cover"
+        />
+        <img
+          *ngIf="!programmazione.filmDetails?.coverUrl"
+          src="path/to/placeholder.jpg"
+          alt="Placeholder cover"
+        />
+      </div>
+      <div class="film-details" *ngIf="programmazione.filmDetails">
+        <h3>{{ programmazione.filmDetails.nome }}</h3>
+        <p><strong>Genere:</strong> {{ programmazione.filmDetails.genere }}</p>
+        <p><strong>Regia:</strong> {{ programmazione.filmDetails.regia }}</p>
+        <p>
+          <strong>Durata:</strong>
+          {{ programmazione.filmDetails.durata }} minuti
+        </p>
+        <p><strong>Data Inizio:</strong> {{ programmazione.dataInizio }}</p>
+        <p><strong>Data Fine:</strong> {{ programmazione.dataFine }}</p>
+      </div>
+      <div class="sala-details" *ngIf="programmazione.salaDetails">
+        <h3>Dettagli Sala</h3>
+        <p><strong>Sala:</strong> {{ programmazione.salaDetails?.nome }}</p>
+        <p>
+          <strong>Capienza:</strong> {{ programmazione.salaDetails?.capienza }}
+        </p>
+        <p>
+          <strong>Modalità IMAX:</strong>
+          {{ programmazione.salaDetails?.flagImax ? "SI" : "NO" }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="otherProgrammazioni.length > 0">
+    <h3>Altri Film in Programmazione</h3>
+    <div
+      *ngFor="let programmazione of otherProgrammazioni"
+      class="film-container"
+    >
+      <div class="film-cover">
+        <img
+          *ngIf="programmazione.filmDetails?.coverUrl"
+          [src]="programmazione.filmDetails?.coverUrl"
+          alt="{{ programmazione.filmDetails?.nome }} cover"
+        />
+        <img
+          *ngIf="!programmazione.filmDetails?.coverUrl"
+          src="path/to/placeholder.jpg"
+          alt="Placeholder cover"
+        />
+      </div>
+      <div class="film-details" *ngIf="programmazione.filmDetails">
+        <h3>{{ programmazione.filmDetails.nome }}</h3>
+        <p><strong>Genere:</strong> {{ programmazione.filmDetails.genere }}</p>
+        <p><strong>Regia:</strong> {{ programmazione.filmDetails.regia }}</p>
+        <p>
+          <strong>Durata:</strong>
+          {{ programmazione.filmDetails.durata }} minuti
+        </p>
+        <p><strong>Data Inizio:</strong> {{ programmazione.dataInizio }}</p>
+        <p><strong>Data Fine:</strong> {{ programmazione.dataFine }}</p>
+      </div>
+      <div class="sala-details" *ngIf="programmazione.salaDetails">
+        <h3>Dettagli Sala</h3>
+        <p><strong>Sala:</strong> {{ programmazione.salaDetails?.nome }}</p>
+        <p>
+          <strong>Capienza:</strong> {{ programmazione.salaDetails?.capienza }}
+        </p>
+        <p>
+          <strong>Modalità IMAX:</strong>
+          {{ programmazione.salaDetails?.flagImax ? "SI" : "NO" }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="liveProgrammazioni.length === 0 && otherProgrammazioni.length === 0"
+  >
+    <h3>Tutti i Film</h3>
+    <div
+      *ngFor="let programmazione of activeProgrammazioni"
+      class="film-container"
+    >
+      <div class="film-cover">
+        <img
+          *ngIf="programmazione.filmDetails?.coverUrl"
+          [src]="programmazione.filmDetails?.coverUrl"
+          alt="{{ programmazione.filmDetails?.nome }} cover"
+        />
+        <img
+          *ngIf="!programmazione.filmDetails?.coverUrl"
+          src="path/to/placeholder.jpg"
+          alt="Placeholder cover"
+        />
+      </div>
+      <div class="film-details" *ngIf="programmazione.filmDetails">
+        <h3>{{ programmazione.filmDetails.nome }}</h3>
+        <p><strong>Genere:</strong> {{ programmazione.filmDetails.genere }}</p>
+        <p><strong>Regia:</strong> {{ programmazione.filmDetails.regia }}</p>
+        <p>
+          <strong>Durata:</strong>
+          {{ programmazione.filmDetails.durata }} minuti
+        </p>
+        <p><strong>Data Inizio:</strong> {{ programmazione.dataInizio }}</p>
+        <p><strong>Data Fine:</strong> {{ programmazione.dataFine }}</p>
+      </div>
+      <div class="sala-details" *ngIf="programmazione.salaDetails">
+        <h3>Dettagli Sala</h3>
+        <p><strong>Sala:</strong> {{ programmazione.salaDetails?.nome }}</p>
+        <p>
+          <strong>Capienza:</strong> {{ programmazione.salaDetails?.capienza }}
+        </p>
+        <p>
+          <strong>Modalità IMAX:</strong>
+          {{ programmazione.salaDetails?.flagImax ? "SI" : "NO" }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

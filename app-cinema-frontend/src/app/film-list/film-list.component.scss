@@ -1,0 +1,58 @@
+/* src/app/film-list/film-list.component.scss */
+.film-list-container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.date-picker {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  label {
+    margin-right: 10px;
+  }
+
+  .form-control {
+    flex: 1;
+    margin-right: 10px;
+  }
+}
+
+.film-container {
+  display: flex;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.film-cover img {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+.film-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.details-container {
+  flex: 1;
+  /* Permette alla sezione dei dettagli (film e sala) di occupare lo spazio rimanente */
+  display: flex;
+  flex-direction: column;
+}
+
+.date-details {
+  margin-top: 10px;
+  /* Aggiunge spazio tra i dettagli di sala e la sezione delle date */
+}

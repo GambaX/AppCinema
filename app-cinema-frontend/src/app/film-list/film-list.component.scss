@@ -23,28 +23,6 @@
   }
 }
 
-.film-container {
-  display: flex;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #f9f9f9;
-}
-
-.film-cover img {
-  width: 150px;
-  height: 200px;
-  object-fit: cover;
-  margin-right: 20px;
-}
-
-.film-details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .logout-button {
   display: inline-block;
   padding: 10px 20px;
@@ -71,3 +49,41 @@
   }
 }
 
+// Film container styling with shadow and hover effect
+.film-container {
+  display: flex;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+// Film cover styling
+.film-cover img {
+  width: 150px;
+  height: 200px;
+  object-fit: cover;
+  margin-right: 20px;
+}
+
+// Film details styling
+.film-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Sala details styling
+.sala-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

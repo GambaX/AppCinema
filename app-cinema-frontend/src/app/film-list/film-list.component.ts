@@ -108,18 +108,14 @@ export class FilmListComponent implements OnInit {
         (p: Programmazione) =>
           (new Date(p.dataInizio) >= startDate &&
             new Date(p.dataInizio) <= endDate) ||
-          (new Date(p.dataFine) >= startDate && new Date(p.dataFine) <= endDate)
+          (new Date(p.dataFine) >= startDate &&
+            new Date(p.dataFine) <= endDate) ||
+          (new Date(p.dataInizio) <= startDate &&
+            new Date(p.dataFine) >= endDate)
       );
-
-      this.otherProgrammazioni = this.activeProgrammazioni.filter(
-        (p: Programmazione) =>
-          !(
-            (new Date(p.dataInizio) >= startDate &&
-              new Date(p.dataInizio) <= endDate) ||
-            (new Date(p.dataFine) >= startDate &&
-              new Date(p.dataFine) <= endDate)
-          )
-      );
+       this.otherProgrammazioni = this.activeProgrammazioni.filter(
+         (p: Programmazione) => !this.liveProgrammazioni.includes(p)
+       );
     } else {
       this.otherProgrammazioni = [];
       this.liveProgrammazioni = [];

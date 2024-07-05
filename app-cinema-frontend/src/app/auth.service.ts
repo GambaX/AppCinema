@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8080/user'; // URL del backend
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  private isAuthenticatedSubject: BehaviorSubject<boolean> ;
+  public isAuthenticated: Observable<boolean>;
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<any>(
-      JSON.parse(localStorage.getItem('currentUser')!)
-    );
-    this.currentUser = this.currentUserSubject.asObservable();
+    localStorage.removeItem('currentUser');
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!);
+    this.isAuthenticatedSubject = new BehaviorSubject<boolean>(!!currentUser);
+    this.isAuthenticated = this.isAuthenticatedSubject.asObservable();
   }
 
-  public get currentUserValue(): any {
-    return this.currentUserSubject.value;
+  public get isAuthenticatedValue(): boolean {
+    return this.isAuthenticatedSubject.value;
   }
 
   login(username: string, password: string) {
@@ -29,7 +29,7 @@ export class AuthService {
         map((user) => {
           if (user) {
             localStorage.setItem('currentUser', JSON.stringify(user));
-            this.currentUserSubject.next(user);
+            this.isAuthenticatedSubject.next(true);
           }
           return user;
         })
@@ -38,6 +38,10 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    this.isAuthenticatedSubject.next(false);
+  }
+
+  isAuthenticatedUser(): boolean {
+    return this.isAuthenticatedSubject.value;
   }
 }

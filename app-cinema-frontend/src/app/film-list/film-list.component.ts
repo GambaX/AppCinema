@@ -5,6 +5,8 @@ import { Programmazione } from '../programmazione.model';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
+import { AuthService } from '../auth.service';  
+
 
 @Component({
   selector: 'app-film-list',
@@ -25,11 +27,14 @@ export class FilmListComponent implements OnInit {
   selectedEndDate: string | null = null;
   isLoggedIn = false; // Proprietà per gestire lo stato di login
 
-  constructor(private programmazioneService: ProgrammazioneService) {}
+  constructor(
+    private authService: AuthService,
+    private programmazioneService: ProgrammazioneService
+  ) {}
 
   ngOnInit() {
     this.loadProgrammazioni();
-
+    this.isLoggedIn = this.authService.isAuthenticatedUser();
     if (this.uploadSuccessEvent) {
       this.uploadSuccessEvent.subscribe(() => {
         this.loadProgrammazioni();
@@ -78,6 +83,15 @@ export class FilmListComponent implements OnInit {
 
   filterProgrammazioni() {
     const currentDate = new Date();
+
+
+    if (this.isLoggedIn) {
+    this.liveProgrammazioni = [];
+    this.otherProgrammazioni = [];
+    this.activeProgrammazioni = this.allProgrammazioni;
+    return;
+  }
+
     if (!this.selectedStartDate || !this.selectedEndDate) {
       this.liveProgrammazioni = [];
       this.otherProgrammazioni = [];
@@ -110,5 +124,11 @@ export class FilmListComponent implements OnInit {
       this.otherProgrammazioni = [];
       this.liveProgrammazioni = [];
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    window.location.href = ''; 
   }
 }

@@ -45,14 +45,29 @@
   justify-content: center;
 }
 
-.details-container {
-  flex: 1;
-  /* Permette alla sezione dei dettagli (film e sala) di occupare lo spazio rimanente */
-  display: flex;
-  flex-direction: column;
+.logout-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
+  }
+
+  &:active {
+    background-color: #004085;
+  }
 }
 
-.date-details {
-  margin-top: 10px;
-  /* Aggiunge spazio tra i dettagli di sala e la sezione delle date */
-}

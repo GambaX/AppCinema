@@ -1,6 +1,9 @@
+<div>
+  <button *ngIf="isLoggedIn" (click)="logout()" class="logout-button">Logout</button>
+</div>
 <div class="film-list-container">
   <h2>Programmazioni</h2>
-  <div class="date-picker">
+  <div *ngIf="!isLoggedIn" class="date-picker">
     <label for="startDate">Data Inizio:</label>
     <input
       type="date"

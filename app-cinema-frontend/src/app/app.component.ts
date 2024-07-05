@@ -5,11 +5,17 @@ import { FilmListComponent } from './film-list/film-list.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FilmListComponent, FormsModule, HttpClientModule],
+  imports: [
+    RouterOutlet, CommonModule,
+    FilmListComponent,
+    FormsModule,
+    HttpClientModule,
+  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   providers: [ProgrammazioneService],
@@ -32,7 +38,7 @@ export class AppComponent implements OnInit {
   toggleLoginForm() {
     this.showLoginForm = !this.showLoginForm;
   }
-
+  /*
   onSubmit() {
     this.programmazioneService
       .login(this.loginData.username, this.loginData.password)
@@ -48,12 +54,12 @@ export class AppComponent implements OnInit {
           this.loginError = 'Invalid username or password';
         },
       });
-  }
-
+  }*/
+  /*
   logout() {
     this.isLoggedIn = false;
     this.selectedFile = null;
-  }
+  }*/
 
   onFileSelected(event: any) {
     const file: File = event.target.files[0];

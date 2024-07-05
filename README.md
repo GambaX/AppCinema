@@ -70,12 +70,12 @@ Una volta che l'applicazione è in esecuzione, puoi accedervi all'indirizzo `htt
 - **Ottieni sala per nome:**
 
   ```http
-  GET /cinema/salabynome
+  POST /cinema/salabynome
   ```
 
 - **Ottieni film per nome:**
   ```http
-  GET /cinema/filmbynome
+  POST /cinema/filmbynome
   ```
 
 ## Schema del Database
@@ -87,7 +87,7 @@ Il database è composto dalle seguenti tabelle:
 - **Programmazione:** Collega film e sale, memorizzando i dettagli dei programmi.
 - **Users:** Gestisce l'autenticazione degli utenti.
 
-![Schema del Database](https://ibb.co/TmVWRZf)
+![Schema del Database](https://i.ibb.co/XShYp9Q/ERD-App-Cinema.png)
 
 ## Contributi
 

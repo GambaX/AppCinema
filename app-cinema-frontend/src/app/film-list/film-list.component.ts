@@ -5,8 +5,7 @@ import { Programmazione } from '../programmazione.model';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { AuthService } from '../auth.service';  
-
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-film-list',
@@ -16,7 +15,6 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./film-list.component.scss'],
 })
 export class FilmListComponent implements OnInit {
-  @Input() uploadSuccessEvent!: EventEmitter<void>;
   programmazioni: Programmazione[] = [];
   otherProgrammazioni: Programmazione[] = [];
   liveProgrammazioni: Programmazione[] = [];
@@ -25,7 +23,9 @@ export class FilmListComponent implements OnInit {
   errorMessage: string | null = null;
   selectedStartDate: string | null = null;
   selectedEndDate: string | null = null;
-  isLoggedIn = false; // Proprietà per gestire lo stato di login
+  isLoggedIn = false;
+  selectedFile: File | null = null;
+  showSuccessAnimation = false;
 
   constructor(
     private authService: AuthService,
@@ -35,11 +35,6 @@ export class FilmListComponent implements OnInit {
   ngOnInit() {
     this.loadProgrammazioni();
     this.isLoggedIn = this.authService.isAuthenticatedUser();
-    if (this.uploadSuccessEvent) {
-      this.uploadSuccessEvent.subscribe(() => {
-        this.loadProgrammazioni();
-      });
-    }
   }
 
   onDateChange() {
@@ -84,13 +79,12 @@ export class FilmListComponent implements OnInit {
   filterProgrammazioni() {
     const currentDate = new Date();
 
-
     if (this.isLoggedIn) {
-    this.liveProgrammazioni = [];
-    this.otherProgrammazioni = [];
-    this.activeProgrammazioni = this.allProgrammazioni;
-    return;
-  }
+      this.liveProgrammazioni = [];
+      this.otherProgrammazioni = [];
+      this.activeProgrammazioni = this.allProgrammazioni;
+      return;
+    }
 
     if (!this.selectedStartDate || !this.selectedEndDate) {
       this.liveProgrammazioni = [];
@@ -113,9 +107,9 @@ export class FilmListComponent implements OnInit {
           (new Date(p.dataInizio) <= startDate &&
             new Date(p.dataFine) >= endDate)
       );
-       this.otherProgrammazioni = this.activeProgrammazioni.filter(
-         (p: Programmazione) => !this.liveProgrammazioni.includes(p)
-       );
+      this.otherProgrammazioni = this.activeProgrammazioni.filter(
+        (p: Programmazione) => !this.liveProgrammazioni.includes(p)
+      );
     } else {
       this.otherProgrammazioni = [];
       this.liveProgrammazioni = [];
@@ -125,6 +119,58 @@ export class FilmListComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.isLoggedIn = false;
-    window.location.href = ''; 
+    window.location.href = '';
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const fileName = file.name.toLowerCase();
+      const fileType = file.type;
+
+      // Check both file extension and MIME type
+      const isExcelFile =
+        fileName.endsWith('.xlsx') &&
+        (fileType ===
+          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+          fileType === 'application/vnd.ms-excel' ||
+          fileType === '');
+
+      if (isExcelFile) {
+        this.selectedFile = file;
+      } else {
+        alert('Per favore seleziona un file Excel valido (.xlsx)');
+        this.selectedFile = null;
+      }
+    }
+  }
+
+  uploadFile() {
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+
+      this.programmazioneService.uploadProgrammazione(formData).subscribe({
+        next: () => {
+          this.showSuccessAnimation = true;
+          this.loadProgrammazioni();
+          setTimeout(() => {
+            this.showSuccessAnimation = false;
+          }, 3000); // L'animazione dura 3 secondi
+          this.selectedFile = null;
+          const input = document.querySelector(
+            'input[type="file"]'
+          ) as HTMLInputElement;
+          if (input) {
+            input.value = ''; // Resetta il valore dell'input file
+          }
+          // Ricarica le programmazioni dopo un upload avvenuto con successo
+          this.loadProgrammazioni();
+        },
+        error: (error: any) => {
+          alert('Error uploading file');
+        },
+      });
+    }
   }
 }

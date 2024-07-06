@@ -1,5 +1,11 @@
+
 <div>
   <button *ngIf="isLoggedIn" (click)="logout()" class="logout-button">Logout</button>
+  <div *ngIf="isLoggedIn" class="file-upload">
+    <label for="fileInput">Carica file .xlsx:</label>
+    <input type="file" id="fileInput" accept=".xlsx" (change)="onFileSelected($event)" />
+    <button (click)="uploadFile()" [disabled]="!selectedFile" class="upload-button">Upload</button>
+  </div>
 </div>
 <div class="film-list-container">
   <h2>Programmazioni</h2>

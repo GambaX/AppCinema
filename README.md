@@ -12,7 +12,6 @@ Benvenuto su AppCinema, un'applicazione moderna per la gestione delle programmaz
 - [Endpoint API](#endpoint-api)
 - [Schema del Database](#schema-del-database)
 - [Contributi](#contributi)
-- [Licenza](#licenza)
 - [Contatti](#contatti)
 
 ## Introduzione
@@ -98,10 +97,6 @@ I contributi sono benvenuti! Segui questi passaggi:
 3. Committa le tue modifiche (`git commit -m 'Aggiungi una nuova funzionalità'`).
 4. Pusha sul branch (`git push origin feature/your-feature`).
 5. Apri una Pull Request.
-
-## Licenza
-
-Questo progetto è licenziato sotto la Licenza MIT - vedi il file [LICENSE](LICENSE) per i dettagli.
 
 ## Contatti
 
